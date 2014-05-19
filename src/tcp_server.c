@@ -60,8 +60,8 @@ tcp_server_accept(server_t *server) {
         if (conn_fd >= 0) break;
 
         if (errno == EPROTO ||
-                errno == ECONNABORTED ||
-                errno == EAGAIN) {
+            errno == ECONNABORTED ||
+            errno == EAGAIN) {
             continue;
         }
 
