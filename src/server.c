@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <poll.h>
+#include <errno.h>
 
 #include "libserver_internal.h"
 
@@ -62,7 +63,7 @@ server_mux(server_t **servers, int nservers) {
     }
 
     while (true) {
-        if (poll(spoll, nservers, -1) < 0) return;
+        if (poll(spoll, nservers, -1) < 0 && errno != EINTR) return;
 
         for (int i = 0; i < nservers; i++) {
             if (spoll[i].revents & POLLIN) {
